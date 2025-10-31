@@ -1,459 +1,871 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Gedefaye Anteneh | Portfolio</title>
-    
+    <title>Gedefaye Anteneh | Full Stack Developer</title>
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Times+New+Roman&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
 
     <style>
-        /* --- Color Variables for Theming --- */
+        /* --- Professional Color Scheme --- */
         :root {
-            --primary-maroon: #5b9296;
-            --secondary-gold: #FFD700;
-            --background-dark: #b49595;
-            --text-light: #f4f7f6;
-            --text-dark: #423333;
-            --card-dark: #423333;
-            --card-light: #e9ecef;
+            --primary-blue: #2563eb;
+            --primary-dark: #1e40af;
+            --accent-teal: #0d9488;
+            --accent-light: #14b8a6;
+            --background-dark: #0f172a;
+            --card-dark: #1e293b;
+            --text-light: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-dark: #334155;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+        }
+
+        [data-theme="light"] {
+            --background-light: #f1f5f9;
+            --card-light: #ffffff;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --border-light: #e2e8f0;
+            --input-bg-light: #ffffff;
+            --input-border-light: #d1d5db;
         }
 
         /* --- Common Styles --- */
         body {
-            font-family: 'Times New Roman', Times, serif;
+            font-family: 'Inter', sans-serif;
             scroll-behavior: smooth;
             transition: background 0.4s, color 0.4s;
+            line-height: 1.6;
         }
-        h2 {
-            border-bottom: 2px solid;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
-        .themed-accent-color {
-            color: var(--secondary-gold);
-        }
-        .about-container {
-            padding: 1.5rem;
-            border-left: 6px solid;
-            border-radius: 0.75rem;
-            font-size: 1.05rem;
-            line-height: 1.7;
-            transition: background-color 0.4s, color 0.4s, border-color 0.4s;
-            box-shadow: 0 4px 12px rgba(202, 116, 174, 0.1);
-        }
-        ul {
-            list-style-type: disc;
-            padding-left: 20px;
-        }
-        .project-card, .skill-block {
-            padding: 1.5rem;
-            border-left: 5px solid;
-            border-radius: 12px;
-            transition: background-color 0.3s ease, transform 0.2s ease, border-color 0.4s;
-        }
-        .project-card:hover {
-            transform: translateY(-5px);
-        }
-        .contact-link, footer a {
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
             font-weight: 600;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        footer a i {
-            color: inherit;
-        }
-        .contact-link:hover, footer a:hover {
-            text-decoration: underline;
-        }
-        /* Animations */
-        .animate-fade-in { animation: fadeIn 1.2s ease-in-out; }
-        .animate-slide-in { animation: slideIn 1s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes slideIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Project fade-in */
-        .project {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.4s ease, transform 0.4s ease;
-        }
-        .project.show {
-            opacity: 1;
-            transform: translateY(0);
         }
 
-        /* Profile Image */
-        .profile-pic {
+        h2 {
+            border-bottom: 2px solid var(--primary-blue);
+            padding-bottom: 12px;
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
             width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid;
-            transition: border-color 0.4s;
+            height: 2px;
+            background: var(--accent-teal);
         }
-        /* Buttons */
-        .btn-custom {
-            background-color: var(--primary-maroon);
-            color: white;
-            border: none;
-            transition: background-color 0.3s ease;
-            padding: 0.3rem 0.8rem;
-            font-size: 0.9rem;
+
+        .themed-accent-color {
+            color: var(--accent-teal);
         }
-        .btn-custom:hover, .btn-custom:focus {
-            background-color: #aca677;
-            color: white;
+
+        .section-container {
+            padding: 2rem 1.5rem;
+            border-radius: 12px;
+            transition: background-color 0.4s, color 0.4s;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem;
         }
-        .btn-sm.active {
-            background-color: var(--secondary-gold);
-            color: var(--card-dark);
-        }
-        /* Header & Footer */
+
+        /* --- Header Styles --- */
         header {
-            background-color: var(--primary-maroon);
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark) 100%);
             color: var(--text-light);
-            padding: 0.5rem;
+            padding: 0.8rem 0;
             position: fixed;
             top: 0;
             width: 100%;
-            z-index: 999;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
-        footer {
-            background-color: var(--primary-maroon);
+
+        .profile-pic {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* --- Button Styles --- */
+        .btn-custom {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0.5rem 1.2rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-custom:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-sm.active {
+            background: var(--accent-teal);
+            color: white;
+        }
+
+        /* --- Card Styles --- */
+        .project-card,
+        .skill-block {
+            padding: 1.5rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            height: 100%;
+            border-left: 4px solid var(--primary-blue);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(245, 245, 240, 0.1);
+        }
+
+        /* --- Enhanced Contact Form Styles --- */
+        .contact-section {
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+
+        .contact-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary-blue);
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .contact-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.2rem;
+        }
+
+        .contact-value {
+            font-weight: 500;
             color: var(--text-light);
-            padding: 0.9rem;
-            text-align: center;
+            text-decoration: none;
+            transition: color 0.3s;
         }
+
+        .contact-value:hover {
+            color: var(--accent-light);
+        }
+
+        /* Enhanced Compact Form */
+        .compact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .form-group {
+            margin-bottom: 0;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .form-control-enhanced {
+            padding: 0.85rem 1rem;
+            border-radius: 8px;
+            border: 2px solid var(--border-dark);
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-light);
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        .form-control-enhanced::placeholder {
+            color: var(--text-muted);
+            opacity: 0.7;
+        }
+
+        .form-control-enhanced:focus {
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+            background: rgba(255, 255, 255, 0.12);
+            outline: none;
+        }
+
+        textarea.form-control-enhanced {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .btn-submit-enhanced {
+            background: var(--accent-teal);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0.9rem 1.5rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .btn-submit-enhanced:hover {
+            background: var(--accent-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            z-index: 9999;
+            padding: 12px 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            font-size: 0.9rem;
+            max-width: 300px;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+
+        .toast.success {
+            background: var(--success);
+        }
+
+        .toast.error {
+            background: var(--error);
+        }
+
+        .toast.info {
+            background: var(--primary-blue);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark) 100%);
+            color: var(--text-light);
+            padding: 1.5rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            margin: 0 0.5rem;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
         /* Scroll To Top Button */
         #scrollToTopBtn {
             position: fixed;
-            bottom: 40px;
+            bottom: 30px;
             right: 30px;
             z-index: 999;
             border: none;
-            padding: 12px 16px;
-            font-size: 1.2rem;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
+            background: var(--primary-blue);
+            color: white;
+            font-size: 1.2rem;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
             cursor: pointer;
             display: none;
             transition: all 0.3s ease;
         }
-        /* Responsive Styles */
-        @media (max-width: 768px) {
-            .header { flex-direction: column; text-align: center; }
-            .header .d-flex { flex-direction: column; align-items: center !important; }
-            .header .d-flex h1 { margin-top: 10px; }
-            .header .d-flex p { margin-bottom: 10px; }
-            .header .btn-custom { margin-top: 10px; width: 100%; }
-            .about-container { padding: 1rem; font-size: 1rem; }
+
+        #scrollToTopBtn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
         }
 
         /* --- Theme Styles --- */
-        [data-theme="light"] body { background-color: #f8f9fa; color: var(--text-dark); }
-        [data-theme="light"] h2, [data-theme="light"] .themed-accent-color { border-color: var(--primary-maroon); color: var(--primary-maroon); }
-        [data-theme="light"] .project-card, [data-theme="light"] .skill-block { background-color: var(--card-light); border-color: var(--primary-maroon); border: 1px solid #ddd; }
-        [data-theme="light"] .project-card:hover { background-color: #dee2e6; }
-        [data-theme="light"] .project-card .card-body p, [data-theme="light"] .skill-block ul li { color: var(--text-dark); }
-        [data-theme="light"] .about-container { background-color: var(--card-light); color: var(--text-dark); border-left-color: var(--primary-maroon); border: 1px solid #ddd; }
-        [data-theme="light"] .profile-pic { border-color: var(--primary-maroon); }
-        [data-theme="light"] .contact-link { color: var(--primary-maroon); }
-        [data-theme="light"] footer a { color: var(--text-light); }
-        [data-theme="light"] footer a:hover { color: var(--secondary-gold); }
-        [data-theme="light"] #scrollToTopBtn { background-color: var(--primary-maroon); color: var(--text-light); }
-        [data-theme="light"] #scrollToTopBtn:hover { background-color: #4f6e7a; }
+        [data-theme="dark"] body {
+            background: var(--background-dark);
+            color: var(--text-light);
+        }
 
-        [data-theme="dark"] body { background-color: var(--background-dark); color: var(--text-light); }
-        [data-theme="dark"] h2, [data-theme="dark"] .themed-accent-color { border-color: var(--secondary-gold); color: var(--secondary-gold); }
-        [data-theme="dark"] .project-card, [data-theme="dark"] .skill-block { background-color: var(--card-dark); border-left-color: var(--secondary-gold); }
-        [data-theme="dark"] .project-card:hover { background-color: #546868; }
-        [data-theme="dark"] .project-card .card-body p, [data-theme="dark"] .skill-block ul li { color: var(--text-light); }
-        [data-theme="dark"] .about-container { background-color: var(--card-dark); color: var(--text-light); border-left-color: var(--secondary-gold); }
-        [data-theme="dark"] .profile-pic { border-color: var(--secondary-gold); }
-        [data-theme="dark"] .contact-link { color: var(--secondary-gold); }
-        [data-theme="dark"] footer a { color: var(--secondary-gold); }
-        [data-theme="dark"] footer a:hover { color: var(--text-light); }
-        [data-theme="dark"] #scrollToTopBtn { background-color: var(--secondary-gold); color: var(--primary-maroon); }
-        [data-theme="dark"] #scrollToTopBtn:hover { background-color: #ffd700; color: white; }
+        [data-theme="dark"] .section-container,
+        [data-theme="dark"] .project-card,
+        [data-theme="dark"] .skill-block,
+        [data-theme="dark"] .contact-section {
+            background: var(--card-dark);
+            border: 1px solid var(--border-dark);
+        }
+
+        [data-theme="light"] body {
+            background: var(--background-light);
+            color: var(--text-dark);
+        }
+
+        [data-theme="light"] .section-container,
+        [data-theme="light"] .project-card,
+        [data-theme="light"] .skill-block,
+        [data-theme="light"] .contact-section {
+            background: var(--card-light);
+            border: 1px solid var(--border-light);
+        }
+
+        [data-theme="light"] .contact-value {
+            color: var(--text-dark);
+        }
+
+        [data-theme="light"] .form-control-enhanced {
+            background: var(--input-bg-light);
+            border: 2px solid var(--input-border-light);
+            color: var(--text-dark);
+        }
+
+        [data-theme="light"] .form-control-enhanced::placeholder {
+            color: var(--text-muted);
+        }
+
+        [data-theme="light"] .form-control-enhanced:focus {
+            background: var(--input-bg-light);
+            border-color: var(--primary-blue);
+        }
+
+        [data-theme="light"] .form-label {
+            color: var(--text-dark);
+        }
+
+        [data-theme="light"] .contact-item:hover {
+            background: rgba(0, 0, 0, 0.03);
+        }
+
+        /* --- Text Visibility Fixes --- */
+        [data-theme="dark"] .text-content,
+        [data-theme="dark"] .about-content,
+        [data-theme="dark"] .skill-block,
+        [data-theme="dark"] .project-card,
+        [data-theme="dark"] .highlight-box {
+            color: var(--text-light) !important;
+        }
+
+        [data-theme="light"] .text-content,
+        [data-theme="light"] .about-content,
+        [data-theme="light"] .skill-block,
+        [data-theme="light"] .project-card,
+        [data-theme="light"] .highlight-box {
+            color: var(--text-dark) !important;
+        }
+
+        .highlight-box {
+            background: rgba(13, 148, 136, 0.1);
+            border-left: 4px solid var(--accent-teal);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+
+            .header-actions {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .section-container {
+                padding: 1.5rem 1rem;
+            }
+        }
+
+        /* Animation for sections */
+        .animate-section {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .delay-1 {
+            animation-delay: 0.1s;
+        }
+
+        .delay-2 {
+            animation-delay: 0.2s;
+        }
+
+        .delay-3 {
+            animation-delay: 0.3s;
+        }
     </style>
 </head>
+
 <body class="bg-dark text-light">
 
-<header class="fixed-top">
-    <div class="container d-flex justify-content-between align-items-center py-3">
-        <div class="d-flex align-items-center">
-            <img src="images/profile.jpg" alt="Profile" class="profile-pic me-3" />
-            <div>
-                <h1 class="h5 text-white mb-0">Gedefaye Anteneh</h1>
-                <p class="mb-0 text-warning">Full Stack Developer</p>
+    <header class="fixed-top">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center header-content">
+                <div class="d-flex align-items-center">
+                    <img src="images/profile.jpg" alt="Profile" class="profile-pic me-3" />
+                    <div>
+                        <h1 class="h5 mb-0">Gedefaye Anteneh</h1>
+                        <p class="mb-0 opacity-75">Full Stack Developer</p>
+                    </div>
+                </div>
+                <div class="d-flex header-actions">
+                    <button class="btn btn-custom me-2" onclick="toggleTheme()">
+                        <i class="bi bi-sun-fill me-1"></i> Switch Theme
+                    </button>
+                    <a href="Gedefaye Anteneh Resume.pdf" class="btn btn-custom" download>
+                        <i class="bi bi-download me-1"></i> Download CV
+                    </a>
+                </div>
             </div>
         </div>
-        <div>
-            <button class="btn btn-custom me-2" onclick="toggleTheme()">Switch to Light</button>
-            <a href="Gedefaye Anteneh Resume.pdf" class="btn btn-custom" download>📄 Download CV</a>
-        </div>
-    </div>
-</header>
+    </header>
 
-<div style="height: 90px;"></div>
+    <div style="height: 90px;"></div>
 
-<main class="container my-5">
-    <!-- About Section -->
-    <section id="about" class="mb-5 animate-fade-in">
-        <h2 class="text-center mb-4">👨‍💻 About Me</h2>
-        <div class="about-container p-4">
+    <main class="container my-5">
+        <!-- About Section -->
+        <section id="about" class="section-container animate-section">
+            <h2 class="text-center mb-4">About Me</h2>
+            <div class="about-content text-content">
+                <div class="mb-4">
+                    <p>Hello! I'm <strong>Gedefaye Anteneh</strong>, a passionate software professional with a
+                        <strong>BSc in Computer Science</strong> from <strong>Debark University</strong> (2019–2022).
+                    </p>
+                    <p class="lead">I focus on building secure, scalable digital solutions, including mobile banking,
+                        API integration, and microservices. My goal is to be a leading digital banking expert in
+                        Ethiopia and beyond.</p>
+                </div>
+                <div class="highlight-box">
+                    <h5 class="themed-accent-color">My Professional Journey</h5>
+                    <p>I started as a <strong>Junior Core Banking Officer</strong> at <strong>NIB International
+                            Bank</strong> (2023–2025). Key responsibilities:</p>
+                    <ul>
+                        <li>End-to-end CBS operations</li>
+                        <li>Customizing banking modules and workflows</li>
+                        <li>Managing EOD & COB processes</li>
+                        <li>Troubleshooting transaction and integration issues</li>
+                        <li>Monitoring JBOSS environment</li>
+                        <li>Ensuring high availability and compliance</li>
+                    </ul>
+                    <p>In <strong>July 2025</strong>, I joined <strong>Ahadu Bank</strong> as a <strong>Core & Digital
+                            Application Officer</strong>, leading digital transformation initiatives.</p>
+                </div>
+                <div class="highlight-box">
+                    <h5 class="themed-accent-color">My Passion & Goals</h5>
+                    <p>I focus on building secure, scalable digital solutions, including mobile banking, API
+                        integration, and microservices. My goal is to be a leading digital banking expert in Ethiopia
+                        and beyond.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section class="section-container animate-section delay-1">
+            <h2>Skills</h2>
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <div class="skill-block">
+                        <h5 class="themed-accent-color">Backend & APIs</h5>
+                        <ul class="mt-3">
+                            <li>Java >> Spring Boot</li>
+                            <li>Python >> Django, Flask, FastAPI</li>
+                            <li>JavaScript/TypeScript >> Node.js, JWT Authentication</li>
+                            <li>PHP >> Laravel, Symfony</li>
+                            <li>C# >> ASP.NET</li>
+                            <li>Core Banking System APIs</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="skill-block">
+                        <h5 class="themed-accent-color">Frontend & Mobile</h5>
+                        <ul class="mt-3">
+                            <li>HTML, CSS, Sass, Tailwind CSS</li>
+                            <li>React, Next.js, Vue.js, Angular</li>
+                            <li>Flutter & Dart</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="skill-block">
+                        <h5 class="themed-accent-color">Databases & Tools</h5>
+                        <ul class="mt-3">
+                            <li>MongoDB, SQLite</li>
+                            <li>Docker, Git</li>
+                            <li>Oracle</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section class="section-container animate-section delay-2">
+            <h2>Projects</h2>
             <div class="mb-4">
-                <p>Hello! I’m <strong>Gedefaye Anteneh</strong>, a passionate software professional with a <strong>BSc in Computer Science</strong> from <strong>Debark University</strong> (2019–2022).</p>
+                <div class="btn-group" role="group">
+                    <!-- <button class="btn btn-custom btn-sm active" onclick="filterProjects('all')">All</button>
+                    <button class="btn btn-custom btn-sm" onclick="filterProjects('banking')">Banking</button>
+                    <button class="btn btn-custom btn-sm" onclick="filterProjects('mobile')">Mobile</button>
+                    <button class="btn btn-custom btn-sm" onclick="filterProjects('others')">Others</button> -->
+                </div>
             </div>
-            <div class="p-3 rounded-3 my-4">
-                <h5 class="themed-accent-color">💼 My Professional Journey</h5>
-                <p>I started as a <strong>Junior Core Banking Officer</strong> at <strong>NIB International Bank</strong> (2023–2025). Key responsibilities:</p>
-                <ul>
-                    <li>End-to-end CBS operations</li>
-                    <li>Customizing banking modules and workflows</li>
-                    <li>Managing EOD & COB processes</li>
-                    <li>Troubleshooting transaction and integration issues</li>
-                    <li>Monitoring JBOSS environment</li>
-                    <li>Ensuring high availability and compliance</li>
-                </ul>
-                <p>In <strong>July 2025</strong>, I joined <strong>Ahadu Bank</strong> as a <strong>Core & Digital Application Officer</strong>, leading digital transformation initiatives.</p>
+            <div id="project-list" class="row">
+                <div class="col-md-6 mb-3 project show" data-category="banking">
+                    <div class="card project-card h-100">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title themed-accent-color">Ahadu Bank Payroll Management System</h5>
+                            <p class="card-text flex-grow-1">Web-based payroll solution with secure backend and
+                                biometric attendance integration.</p>
+                            <a href="https://ahadu-payroll-mgnt-system-frontend.onrender.com/" target="_blank"
+                                class="btn btn-custom btn-sm align-self-start">View Project</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3 project show" data-category="banking">
+                    <div class="card project-card h-100">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title themed-accent-color">Ahadu Bank Customer Authentication Portal</h5>
+                            <p class="card-text flex-grow-1">Secure portal integrated with National Digital ID for
+                                real-time KYC verification.</p>
+                            <a href="https://fayda-integration.onrender.com" target="_blank"
+                                class="btn btn-custom btn-sm align-self-start">View Project</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3 project show" data-category="banking">
+                    <div class="card project-card h-100">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title themed-accent-color">Digital Equb</h5>
+                            <p class="card-text flex-grow-1">Fintech solution for group savings and payouts integrated
+                                with core banking.</p>
+                            <a href="https://ahadu-equib.vercel.app/" target="_blank"
+                                class="btn btn-custom btn-sm align-self-start">View Project</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3 project show" data-category="others">
+                    <div class="card project-card h-100">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title themed-accent-color">Clearance Management System</h5>
+                            <p class="card-text flex-grow-1">Web-based clearance system for Debark University with
+                                secure authentication.</p>
+                            <a href="https://online-clearance-mgnt-system.onrender.com" target="_blank"
+                                class="btn btn-custom btn-sm align-self-start">View Project</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3 project show" data-category="mobile">
+                    <div class="card project-card h-100">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title themed-accent-color">Chat App</h5>
+                            <p class="card-text flex-grow-1">Real-time mobile chat app with Node.js backend for seamless
+                                communication.</p>
+                            <a href="https://my-chat-app-09fl.onrender.com/" target="_blank"
+                                class="btn btn-custom btn-sm align-self-start">View Project</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="p-3 rounded-3 mt-4">
-                <h5 class="themed-accent-color">🚀 My Passion & Goals</h5>
-                <p>I focus on building secure, scalable digital solutions, including mobile banking, API integration, and microservices. My goal is to be a leading digital banking expert in Ethiopia and beyond.</p>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Skills Section -->
-    <section class="mb-5 animate-slide-in">
-        <h2>🛠 Skills</h2>
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <div class="skill-block h-100">
-                    <h3 class="themed-accent-color">Backend & APIs</h3>
-                    <ul>
-                        <li>Java >> Spring Boot</li>
-                        <li>Python >> Django, Flask, FastAPI</li>
-                        <li>JavaScript/TypeScript >> Node.js, JWT Authentication</li>
-                        <li>PHP >> Laravel, Symfony</li>
-                        <li>C# >> ASP.NET</li>
-                        <li>Core Banking System APIs</li>
-                    </ul>
+        <!-- Contact Section -->
+        <section class="contact-section animate-section delay-3">
+            <h2>Contact</h2>
+            <div class="contact-container">
+                <!-- Contact Information -->
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="bi bi-telephone"></i>
+                        </div>
+                        <div class="contact-details">
+                            <span class="contact-label">Phone</span>
+                            <a href="tel:+251920646207" class="contact-value">+251 920 646 207</a>
+                            <a href="tel:+251943558347" class="contact-value">+251 943 558 347</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="bi bi-envelope"></i>
+                        </div>
+                        <div class="contact-details">
+                            <span class="contact-label">Email</span>
+                            <a href="mailto:gedefayeanteneh07@gmail.com"
+                                class="contact-value">gedefayeanteneh07@gmail.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="bi bi-geo-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <span class="contact-label">Location</span>
+                            <span class="contact-value">Addis Ababa, Ethiopia</span>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-6 mb-3">
-                <div class="skill-block h-100">
-                    <h3 class="themed-accent-color">Frontend & Mobile</h3>
-                    <ul>
-                        <li>HTML, CSS, Sass, Tailwind CSS</li>
-                        <li>React, Next.js, Vue.js, Angular</li>
-                        <li>Flutter & Dart</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-12 mb-3">
-                <div class="skill-block h-100">
-                    <h3 class="themed-accent-color">Databases & Tools</h3>
-                    <ul>
-                        <li>MongoDB, SQLite</li>
-                        <li>Docker, Git</li>
-                        <li>Oracle</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Projects Section -->
-    <section class="mb-5 animate-slide-in">
-        <h2>📁 Projects</h2>
-        <div class="mb-3">
-            <button class="btn btn-sm btn-custom active me-2" onclick="filterProjects('all')">All</button>
-            <button class="btn btn-sm btn-custom me-2" onclick="filterProjects('banking')">Banking</button>
-            <button class="btn btn-sm btn-custom me-2" onclick="filterProjects('mobile')">Mobile</button>
-            <button class="btn btn-sm btn-custom" onclick="filterProjects('others')">Others</button>
-        </div>
-        <div id="project-list" class="row">
-            <div class="col-md-6 mb-3 project show" data-category="banking">
-                <div class="card project-card h-100">
-                    <div class="card-body">
-                        <h5 class="card-title themed-accent-color">Ahadu Bank Payroll Management System</h5>
-                        <p class="card-text">Web-based payroll solution with secure backend and biometric attendance integration.</p>
-                        <a href="https://ahadu-payroll-mgnt-system-frontend.onrender.com/" target="_blank" class="btn btn-custom btn-sm">View Project</a>
-                    </div>
+                <!-- Enhanced Contact Form -->
+                <div class="compact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label class="form-label" for="user_name">Your Name</label>
+                            <input type="text" id="user_name" name="user_name" class="form-control-enhanced"
+                                placeholder="Enter your full name" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="user_email">Your Email</label>
+                            <input type="email" id="user_email" name="user_email" class="form-control-enhanced"
+                                placeholder="Enter your email address" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="message">Your Message</label>
+                            <textarea id="message" name="message" class="form-control-enhanced"
+                                placeholder="Type your message here..." rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-submit-enhanced">
+                            <i class="bi bi-send me-2"></i> Send Message
+                        </button>
+                    </form>
                 </div>
             </div>
-            <div class="col-md-6 mb-3 project show" data-category="banking">
-                <div class="card project-card h-100">
-                    <div class="card-body">
-                        <h5 class="card-title themed-accent-color">Ahadu Bank Customer Authentication Portal</h5>
-                        <p class="card-text">Secure portal integrated with National Digital ID for real-time KYC verification.</p>
-                        <a href="https://fayda-integration.onrender.com" target="_blank" class="btn btn-custom btn-sm">View Project</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 mb-3 project show" data-category="banking">
-                <div class="card project-card h-100">
-                    <div class="card-body">
-                        <h5 class="card-title themed-accent-color">Digital Equb</h5>
-                        <p class="card-text">Fintech solution for group savings and payouts integrated with core banking.</p>
-                        <a href="https://ahadu-equib.vercel.app/" target="_blank" class="btn btn-custom btn-sm">View Project</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 mb-3 project show" data-category="others">
-                <div class="card project-card h-100">
-                    <div class="card-body">
-                        <h5 class="card-title themed-accent-color">Clearance Management System</h5>
-                        <p class="card-text">Web-based clearance system for Debark University with secure authentication.</p>
-                        <a href="https://online-clearance-mgnt-system.onrender.com" target="_blank" class="btn btn-custom btn-sm">View Project</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 mb-3 project show" data-category="mobile">
-                <div class="card project-card h-100">
-                    <div class="card-body">
-                        <h5 class="card-title themed-accent-color">Chat App</h5>
-                        <p class="card-text">Real-time mobile chat app with Node.js backend for seamless communication.</p>
-                        <a href="https://my-chat-app-09fl.onrender.com/" target="_blank" class="btn btn-custom btn-sm">View Project</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
-    <!-- Contact Section -->
-    <section class="mb-5 animate-slide-in">
-    <h2>📞 Contact</h2>
-    <div class="d-flex flex-column flex-md-row gap-5">
-        <div class="mb-3 mb-md-0">
-            <p class="mb-0"><strong>Phone:</strong> 
-                <a href="tel:+251920646207" class="contact-link">+251 920 646 207</a> | 
-                <a href="tel:+251943558347" class="contact-link">+251 943 558 347</a>
-            </p>
-            <p class="mb-0"><strong>Email:</strong> 
-                <a href="mailto:gedefayeanteneh07@gmail.com" class="contact-link">gedefayeanteneh07@gmail.com</a>
-            </p>
-            <p class="mb-0"><strong>Location:</strong> Addis Ababa, Ethiopia</p>
-        </div>
-        <div>
-            <form id="contactForm">
-                <div class="mb-2">
-                    <input type="text" name="user_name" class="form-control" placeholder="Name" required>
-                </div>
-                <div class="mb-2">
-                    <input type="email" name="user_email" class="form-control" placeholder="Email" required>
-                </div>
-                <div class="mb-2">
-                    <textarea name="message" class="form-control" placeholder="Message" rows="3" required></textarea>
-                </div>
-                <button type="submit" class="btn btn-custom">Send Message</button>
-            </form>
-            <p id="formStatus" class="mt-2"></p>
-        </div>
-    </div>
+    <!-- Scroll To Top Button -->
+    <button id="scrollToTopBtn" title="Go to top">
+        <i class="bi bi-arrow-up"></i>
+    </button>
 
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Gedefaye Anteneh. All rights reserved.</p>
+            <div class="social-links mt-3">
+                <a href="https://t.me/@TigistuAnteneh" target="_blank"><i class="bi bi-telegram"></i></a>
+                <a href="https://facebook.com/TigistuAnteneh" target="_blank"><i class="bi bi-facebook"></i></a>
+                <a href="https://youtube.com/@GedefayeAntenehTube" target="_blank"><i class="bi bi-youtube"></i></a>
+                <a href="https://tiktok.com/@gedefayeanteneh" target="_blank"><i class="bi bi-tiktok"></i></a>
+                <a href="https://instagram.com/tigistuanteneh" target="_blank"><i class="bi bi-instagram"></i></a>
+                <a href="https://linkedin.com/in/gedefayeanteneh" target="_blank"><i class="bi bi-linkedin"></i></a>
+                <a href="https://x.com/@GedefayeAnteneh" target="_blank"><i class="bi bi-twitter-x"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- EmailJS Script -->
     <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
     <script>
-        (function(){
-            emailjs.init("cQWpEEHMo7TFoeaNz"); // Your public key
+        // Initialize EmailJS
+        (function () {
+            emailjs.init("cQWpEEHMo7TFoeaNz");
         })();
 
-        const form = document.getElementById('contactForm');
-        const statusText = document.getElementById('formStatus');
+        // --- Scroll to Top Button ---
+        const scrollBtn = document.getElementById("scrollToTopBtn");
+        window.onscroll = function () {
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                scrollBtn.style.display = "block";
+            } else {
+                scrollBtn.style.display = "none";
+            }
+        };
+        scrollBtn.addEventListener("click", () => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
 
-        form.addEventListener('submit', function(event) {
+        // --- Theme Toggle ---
+        function toggleTheme() {
+            const htmlEl = document.documentElement;
+            const btn = document.querySelector(".btn-custom");
+            const icon = btn.querySelector("i");
+
+            if (htmlEl.getAttribute("data-theme") === "dark") {
+                htmlEl.setAttribute("data-theme", "light");
+                icon.className = "bi bi-moon-fill me-1";
+                btn.innerHTML = '<i class="bi bi-moon-fill me-1"></i> Switch Theme';
+            } else {
+                htmlEl.setAttribute("data-theme", "dark");
+                icon.className = "bi bi-sun-fill me-1";
+                btn.innerHTML = '<i class="bi bi-sun-fill me-1"></i> Switch Theme';
+            }
+        }
+
+        // --- Project Filtering ---
+        const projects = document.querySelectorAll(".project");
+        function filterProjects(category) {
+            projects.forEach(project => {
+                if (category === "all" || project.dataset.category === category) {
+                    project.classList.add("show");
+                } else {
+                    project.classList.remove("show");
+                }
+            });
+            document.querySelectorAll(".btn-sm").forEach(btn => btn.classList.remove("active"));
+            event.currentTarget.classList.add("active");
+        }
+
+        // --- Contact Form ---
+        const form = document.getElementById('contactForm');
+
+        function showToast(message, type = "info") {
+            // Remove existing toasts
+            const existingToasts = document.querySelectorAll('.toast');
+            existingToasts.forEach(toast => toast.remove());
+
+            // Create new toast
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+
+            document.body.appendChild(toast);
+
+            // Show toast
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 10);
+
+            // Hide toast after 4 seconds
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.parentNode.removeChild(toast);
+                    }
+                }, 500);
+            }, 4000);
+        }
+
+        form.addEventListener('submit', function (event) {
             event.preventDefault();
-            statusText.style.color = "black";
-            statusText.textContent = "Sending...";
+            showToast("Sending your message...", "info");
 
             emailjs.sendForm('service_Gede', 'template_Gede', this)
-            .then(function() {
-                statusText.style.color = "green";
-                statusText.textContent = "Message sent successfully! ✅";
-                form.reset();
-            }, function(error) {
-                statusText.style.color = "red";
-                statusText.textContent = "Failed to send message. ❌ Please try again.";
-                console.error('EmailJS error:', error);
+                .then(function () {
+                    showToast("Message sent successfully! I'll get back to you soon.", "success");
+                    form.reset();
+                }, function (error) {
+                    showToast("Failed to send message. Please try again or contact me directly.", "error");
+                    console.error('EmailJS error:', error);
+                });
+        });
+
+        // Add animation on scroll
+        document.addEventListener('DOMContentLoaded', function () {
+            const sections = document.querySelectorAll('.animate-section');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animationPlayState = 'running';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            sections.forEach(section => {
+                section.style.animationPlayState = 'paused';
+                observer.observe(section);
             });
         });
     </script>
-</section>
-
-</main>
-
-<!-- Scroll To Top Button -->
-<button id="scrollToTopBtn" title="Go to top">↑</button>
-
-<!-- Footer -->
-<footer>
-    <p>&copy; 2025 Gedefaye Anteneh</p>
-    <p>
-        <a href="https://t.me/@TigistuAnteneh" class="me-3" target="_blank"><i class="bi bi-telegram fs-4"></i></a>
-                <a href="https://facebook.com/TigistuAnteneh" class="me-3" target="_blank"><i class="bi bi-facebook fs-4"></i></a>
-                <a href="https://youtube.com/@GedefayeAntenehTube" class="me-3" target="_blank"><i class="bi bi-youtube fs-4"></i></a>
-                <a href="https://tiktok.com/@gedefayeanteneh" class="me-3" target="_blank"><i class="bi bi-tiktok fs-4"></i></a>
-                <a href="https://instagram.com/tigistuanteneh" class="me-3" target="_blank"><i class="bi bi-instagram fs-4"></i></a>
-                <a href="https://linkedin.com/in/gedefayeanteneh" class="me-3" target="_blank"><i class="bi bi-linkedin fs-4"></i></a>
-                <a href="https://x.com/@GedefayeAnteneh" class="me-3" target="_blank"><i class="bi bi-twitter-x fs-4"></i></a>
-    </p>
-</footer>
-
-<script>
-    // --- Scroll to Top Button ---
-    const scrollBtn = document.getElementById("scrollToTopBtn");
-    window.onscroll = function() {
-        if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-            scrollBtn.style.display = "block";
-        } else {
-            scrollBtn.style.display = "none";
-        }
-    };
-    scrollBtn.addEventListener("click", () => {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-    });
-
-    // --- Theme Toggle ---
-    function toggleTheme() {
-        const htmlEl = document.documentElement;
-        const btn = document.querySelector(".btn-custom");
-        if (htmlEl.getAttribute("data-theme") === "dark") {
-            htmlEl.setAttribute("data-theme", "light");
-            btn.textContent = "Switch to Dark";
-        } else {
-            htmlEl.setAttribute("data-theme", "dark");
-            btn.textContent = "Switch to Light";
-        }
-    }
-
-    // --- Project Filtering ---
-    const projects = document.querySelectorAll(".project");
-    function filterProjects(category) {
-        projects.forEach(project => {
-            if (category === "all" || project.dataset.category === category) {
-                project.classList.add("show");
-            } else {
-                project.classList.remove("show");
-            }
-        });
-        document.querySelectorAll(".btn-sm").forEach(btn => btn.classList.remove("active"));
-        event.currentTarget.classList.add("active");
-    }
-
-    // --- Contact Form Placeholder ---
-    function submitContact(event) {
-        event.preventDefault();
-        alert("Thank you for reaching out! I will get back to you soon.");
-        event.target.reset();
-    }
-</script>
 
 </body>
-</html>
 
+</html>
