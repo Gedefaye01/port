@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gedefaye Anteneh | Portfolio</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Times+New+Roman&display=swap" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+
+    <style>
+        /* --- Color Variables for Theming --- */
+        :root {
+            --primary-maroon: #5b9296;
+            --secondary-gold: #FFD700;
+            --background-dark: #b49595;
+            --text-light: #f4f7f6;
+            --text-dark: #423333;
+            --card-dark: #423333;
+            --card-light: #e9ecef;
+        }
+
+        /* --- Common Styles --- */
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            scroll-behavior: smooth;
+            transition: background 0.4s, color 0.4s;
+        }
+        h2 {
+            border-bottom: 2px solid;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .themed-accent-color {
+            color: var(--secondary-gold);
+        }
+        .about-container {
+            padding: 1.5rem;
+            border-left: 6px solid;
+            border-radius: 0.75rem;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            transition: background-color 0.4s, color 0.4s, border-color 0.4s;
+            box-shadow: 0 4px 12px rgba(202, 116, 174, 0.1);
+        }
+        ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+        .project-card, .skill-block {
+            padding: 1.5rem;
+            border-left: 5px solid;
+            border-radius: 12px;
+            transition: background-color 0.3s ease, transform 0.2s ease, border-color 0.4s;
+        }
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+        .contact-link, footer a {
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        footer a i {
+            color: inherit;
+        }
+        .contact-link:hover, footer a:hover {
+            text-decoration: underline;
+        }
+        /* Animations */
+        .animate-fade-in { animation: fadeIn 1.2s ease-in-out; }
+        .animate-slide-in { animation: slideIn 1s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Project fade-in */
+        .project {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .project.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Profile Image */
+        .profile-pic {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid;
+            transition: border-color 0.4s;
+        }
+        /* Buttons */
+        .btn-custom {
+            background-color: var(--primary-maroon);
+            color: white;
+            border: none;
+            transition: background-color 0.3s ease;
+            padding: 0.3rem 0.8rem;
+            font-size: 0.9rem;
+        }
+        .btn-custom:hover, .btn-custom:focus {
+            background-color: #aca677;
+            color: white;
+        }
+        .btn-sm.active {
+            background-color: var(--secondary-gold);
+            color: var(--card-dark);
+        }
+        /* Header & Footer */
+        header {
+            background-color: var(--primary-maroon);
+            color: var(--text-light);
+            padding: 0.5rem;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 999;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+        }
+        footer {
+            background-color: var(--primary-maroon);
+            color: var(--text-light);
+            padding: 0.9rem;
+            text-align: center;
+        }
+        /* Scroll To Top Button */
+        #scrollToTopBtn {
+            position: fixed;
+            bottom: 40px;
+            right: 30px;
+            z-index: 999;
+            border: none;
+            padding: 12px 16px;
+            font-size: 1.2rem;
+            border-radius: 50%;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            display: none;
+            transition: all 0.3s ease;
+        }
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .header { flex-direction: column; text-align: center; }
+            .header .d-flex { flex-direction: column; align-items: center !important; }
+            .header .d-flex h1 { margin-top: 10px; }
+            .header .d-flex p { margin-bottom: 10px; }
+            .header .btn-custom { margin-top: 10px; width: 100%; }
+            .about-container { padding: 1rem; font-size: 1rem; }
+        }
+
+        /* --- Theme Styles --- */
+        [data-theme="light"] body { background-color: #f8f9fa; color: var(--text-dark); }
+        [data-theme="light"] h2, [data-theme="light"] .themed-accent-color { border-color: var(--primary-maroon); color: var(--primary-maroon); }
+        [data-theme="light"] .project-card, [data-theme="light"] .skill-block { background-color: var(--card-light); border-color: var(--primary-maroon); border: 1px solid #ddd; }
+        [data-theme="light"] .project-card:hover { background-color: #dee2e6; }
+        [data-theme="light"] .project-card .card-body p, [data-theme="light"] .skill-block ul li { color: var(--text-dark); }
+        [data-theme="light"] .about-container { background-color: var(--card-light); color: var(--text-dark); border-left-color: var(--primary-maroon); border: 1px solid #ddd; }
+        [data-theme="light"] .profile-pic { border-color: var(--primary-maroon); }
+        [data-theme="light"] .contact-link { color: var(--primary-maroon); }
+        [data-theme="light"] footer a { color: var(--text-light); }
+        [data-theme="light"] footer a:hover { color: var(--secondary-gold); }
+        [data-theme="light"] #scrollToTopBtn { background-color: var(--primary-maroon); color: var(--text-light); }
+        [data-theme="light"] #scrollToTopBtn:hover { background-color: #4f6e7a; }
+
+        [data-theme="dark"] body { background-color: var(--background-dark); color: var(--text-light); }
+        [data-theme="dark"] h2, [data-theme="dark"] .themed-accent-color { border-color: var(--secondary-gold); color: var(--secondary-gold); }
+        [data-theme="dark"] .project-card, [data-theme="dark"] .skill-block { background-color: var(--card-dark); border-left-color: var(--secondary-gold); }
+        [data-theme="dark"] .project-card:hover { background-color: #546868; }
+        [data-theme="dark"] .project-card .card-body p, [data-theme="dark"] .skill-block ul li { color: var(--text-light); }
+        [data-theme="dark"] .about-container { background-color: var(--card-dark); color: var(--text-light); border-left-color: var(--secondary-gold); }
+        [data-theme="dark"] .profile-pic { border-color: var(--secondary-gold); }
+        [data-theme="dark"] .contact-link { color: var(--secondary-gold); }
+        [data-theme="dark"] footer a { color: var(--secondary-gold); }
+        [data-theme="dark"] footer a:hover { color: var(--text-light); }
+        [data-theme="dark"] #scrollToTopBtn { background-color: var(--secondary-gold); color: var(--primary-maroon); }
+        [data-theme="dark"] #scrollToTopBtn:hover { background-color: #ffd700; color: white; }
+    </style>
+</head>
+<body class="bg-dark text-light">
+
+<header class="fixed-top">
+    <div class="container d-flex justify-content-between align-items-center py-3">
+        <div class="d-flex align-items-center">
+            <img src="images/profile.jpg" alt="Profile" class="profile-pic me-3" />
+            <div>
+                <h1 class="h5 text-white mb-0">Gedefaye Anteneh</h1>
+                <p class="mb-0 text-warning">Full Stack Developer</p>
+            </div>
+        </div>
+        <div>
+            <button class="btn btn-custom me-2" onclick="toggleTheme()">Switch to Light</button>
+            <a href="Gedefaye Anteneh Resume.pdf" class="btn btn-custom" download>📄 Download CV</a>
+        </div>
+    </div>
+</header>
+
+<div style="height: 90px;"></div>
+
+<main class="container my-5">
+    <!-- About Section -->
+    <section id="about" class="mb-5 animate-fade-in">
+        <h2 class="text-center mb-4">👨‍💻 About Me</h2>
+        <div class="about-container p-4">
+            <div class="mb-4">
+                <p>Hello! I’m <strong>Gedefaye Anteneh</strong>, a passionate software professional with a <strong>BSc in Computer Science</strong> from <strong>Debark University</strong> (2019–2022).</p>
+            </div>
+            <div class="p-3 rounded-3 my-4">
+                <h5 class="themed-accent-color">💼 My Professional Journey</h5>
+                <p>I started as a <strong>Junior Core Banking Officer</strong> at <strong>NIB International Bank</strong> (2023–2025). Key responsibilities:</p>
+                <ul>
+                    <li>End-to-end CBS operations</li>
+                    <li>Customizing banking modules and workflows</li>
+                    <li>Managing EOD & COB processes</li>
+                    <li>Troubleshooting transaction and integration issues</li>
+                    <li>Monitoring JBOSS environment</li>
+                    <li>Ensuring high availability and compliance</li>
+                </ul>
+                <p>In <strong>July 2025</strong>, I joined <strong>Ahadu Bank</strong> as a <strong>Core & Digital Application Officer</strong>, leading digital transformation initiatives.</p>
+            </div>
+            <div class="p-3 rounded-3 mt-4">
+                <h5 class="themed-accent-color">🚀 My Passion & Goals</h5>
+                <p>I focus on building secure, scalable digital solutions, including mobile banking, API integration, and microservices. My goal is to be a leading digital banking expert in Ethiopia and beyond.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="mb-5 animate-slide-in">
+        <h2>🛠 Skills</h2>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <div class="skill-block h-100">
+                    <h3 class="themed-accent-color">Backend & APIs</h3>
+                    <ul>
+                        <li>Java >> Spring Boot</li>
+                        <li>Python >> Django, Flask, FastAPI</li>
+                        <li>JavaScript/TypeScript >> Node.js, JWT Authentication</li>
+                        <li>PHP >> Laravel, Symfony</li>
+                        <li>C# >> ASP.NET</li>
+                        <li>Core Banking System APIs</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="skill-block h-100">
+                    <h3 class="themed-accent-color">Frontend & Mobile</h3>
+                    <ul>
+                        <li>HTML, CSS, Sass, Tailwind CSS</li>
+                        <li>React, Next.js, Vue.js, Angular</li>
+                        <li>Flutter & Dart</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-12 mb-3">
+                <div class="skill-block h-100">
+                    <h3 class="themed-accent-color">Databases & Tools</h3>
+                    <ul>
+                        <li>MongoDB, SQLite</li>
+                        <li>Docker, Git</li>
+                        <li>Oracle</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="mb-5 animate-slide-in">
+        <h2>📁 Projects</h2>
+        <div class="mb-3">
+            <button class="btn btn-sm btn-custom active me-2" onclick="filterProjects('all')">All</button>
+            <button class="btn btn-sm btn-custom me-2" onclick="filterProjects('banking')">Banking</button>
+            <button class="btn btn-sm btn-custom me-2" onclick="filterProjects('mobile')">Mobile</button>
+            <button class="btn btn-sm btn-custom" onclick="filterProjects('others')">Others</button>
+        </div>
+        <div id="project-list" class="row">
+            <div class="col-md-6 mb-3 project show" data-category="banking">
+                <div class="card project-card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title themed-accent-color">Ahadu Bank Payroll Management System</h5>
+                        <p class="card-text">Web-based payroll solution with secure backend and biometric attendance integration.</p>
+                        <a href="https://ahadu-payroll-mgnt-system-frontend.onrender.com/" target="_blank" class="btn btn-custom btn-sm">View Project</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3 project show" data-category="banking">
+                <div class="card project-card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title themed-accent-color">Ahadu Bank Customer Authentication Portal</h5>
+                        <p class="card-text">Secure portal integrated with National Digital ID for real-time KYC verification.</p>
+                        <a href="https://fayda-integration.onrender.com" target="_blank" class="btn btn-custom btn-sm">View Project</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3 project show" data-category="banking">
+                <div class="card project-card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title themed-accent-color">Digital Equb</h5>
+                        <p class="card-text">Fintech solution for group savings and payouts integrated with core banking.</p>
+                        <a href="https://ahadu-equib.vercel.app/" target="_blank" class="btn btn-custom btn-sm">View Project</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3 project show" data-category="others">
+                <div class="card project-card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title themed-accent-color">Clearance Management System</h5>
+                        <p class="card-text">Web-based clearance system for Debark University with secure authentication.</p>
+                        <a href="https://online-clearance-mgnt-system.onrender.com" target="_blank" class="btn btn-custom btn-sm">View Project</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3 project show" data-category="mobile">
+                <div class="card project-card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title themed-accent-color">Chat App</h5>
+                        <p class="card-text">Real-time mobile chat app with Node.js backend for seamless communication.</p>
+                        <a href="https://my-chat-app-09fl.onrender.com/" target="_blank" class="btn btn-custom btn-sm">View Project</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="mb-5 animate-slide-in">
+    <h2>📞 Contact</h2>
+    <div class="d-flex flex-column flex-md-row gap-5">
+        <div class="mb-3 mb-md-0">
+            <p class="mb-0"><strong>Phone:</strong> 
+                <a href="tel:+251920646207" class="contact-link">+251 920 646 207</a> | 
+                <a href="tel:+251943558347" class="contact-link">+251 943 558 347</a>
+            </p>
+            <p class="mb-0"><strong>Email:</strong> 
+                <a href="mailto:gedefayeanteneh07@gmail.com" class="contact-link">gedefayeanteneh07@gmail.com</a>
+            </p>
+            <p class="mb-0"><strong>Location:</strong> Addis Ababa, Ethiopia</p>
+        </div>
+        <div>
+            <form id="contactForm">
+                <div class="mb-2">
+                    <input type="text" name="user_name" class="form-control" placeholder="Name" required>
+                </div>
+                <div class="mb-2">
+                    <input type="email" name="user_email" class="form-control" placeholder="Email" required>
+                </div>
+                <div class="mb-2">
+                    <textarea name="message" class="form-control" placeholder="Message" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-custom">Send Message</button>
+            </form>
+            <p id="formStatus" class="mt-2"></p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <script>
+        (function(){
+            emailjs.init("cQWpEEHMo7TFoeaNz"); // Your public key
+        })();
+
+        const form = document.getElementById('contactForm');
+        const statusText = document.getElementById('formStatus');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            statusText.style.color = "black";
+            statusText.textContent = "Sending...";
+
+            emailjs.sendForm('service_Gede', 'template_Gede', this)
+            .then(function() {
+                statusText.style.color = "green";
+                statusText.textContent = "Message sent successfully! ✅";
+                form.reset();
+            }, function(error) {
+                statusText.style.color = "red";
+                statusText.textContent = "Failed to send message. ❌ Please try again.";
+                console.error('EmailJS error:', error);
+            });
+        });
+    </script>
+</section>
+
+</main>
+
+<!-- Scroll To Top Button -->
+<button id="scrollToTopBtn" title="Go to top">↑</button>
+
+<!-- Footer -->
+<footer>
+    <p>&copy; 2025 Gedefaye Anteneh</p>
+    <p>
+        <a href="https://t.me/@TigistuAnteneh" class="me-3" target="_blank"><i class="bi bi-telegram fs-4"></i></a>
+                <a href="https://facebook.com/TigistuAnteneh" class="me-3" target="_blank"><i class="bi bi-facebook fs-4"></i></a>
+                <a href="https://youtube.com/@GedefayeAntenehTube" class="me-3" target="_blank"><i class="bi bi-youtube fs-4"></i></a>
+                <a href="https://tiktok.com/@gedefayeanteneh" class="me-3" target="_blank"><i class="bi bi-tiktok fs-4"></i></a>
+                <a href="https://instagram.com/tigistuanteneh" class="me-3" target="_blank"><i class="bi bi-instagram fs-4"></i></a>
+                <a href="https://linkedin.com/in/gedefayeanteneh" class="me-3" target="_blank"><i class="bi bi-linkedin fs-4"></i></a>
+                <a href="https://x.com/@GedefayeAnteneh" class="me-3" target="_blank"><i class="bi bi-twitter-x fs-4"></i></a>
+    </p>
+</footer>
+
+<script>
+    // --- Scroll to Top Button ---
+    const scrollBtn = document.getElementById("scrollToTopBtn");
+    window.onscroll = function() {
+        if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+            scrollBtn.style.display = "block";
+        } else {
+            scrollBtn.style.display = "none";
+        }
+    };
+    scrollBtn.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    // --- Theme Toggle ---
+    function toggleTheme() {
+        const htmlEl = document.documentElement;
+        const btn = document.querySelector(".btn-custom");
+        if (htmlEl.getAttribute("data-theme") === "dark") {
+            htmlEl.setAttribute("data-theme", "light");
+            btn.textContent = "Switch to Dark";
+        } else {
+            htmlEl.setAttribute("data-theme", "dark");
+            btn.textContent = "Switch to Light";
+        }
+    }
+
+    // --- Project Filtering ---
+    const projects = document.querySelectorAll(".project");
+    function filterProjects(category) {
+        projects.forEach(project => {
+            if (category === "all" || project.dataset.category === category) {
+                project.classList.add("show");
+            } else {
+                project.classList.remove("show");
+            }
+        });
+        document.querySelectorAll(".btn-sm").forEach(btn => btn.classList.remove("active"));
+        event.currentTarget.classList.add("active");
+    }
+
+    // --- Contact Form Placeholder ---
+    function submitContact(event) {
+        event.preventDefault();
+        alert("Thank you for reaching out! I will get back to you soon.");
+        event.target.reset();
+    }
+</script>
+
+</body>
+</html>
+
