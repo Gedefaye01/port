@@ -818,8 +818,77 @@
         }
 
         // --- Contact Form ---
-        // --- Contact Form ---
+
         const form = document.getElementById('contactForm');
+
+        // Enhanced email validation function
+        function isValidEmail(email) {
+            // Comprehensive email regex pattern
+            const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+
+            // Basic format check
+            if (!emailRegex.test(email)) {
+                return false;
+            }
+
+            // Check for common fake email patterns
+            const fakeEmailPatterns = [
+                /^test@/i,
+                /^demo@/i,
+                /^example@/i,
+                /^fake@/i,
+                /^temp@/i,
+                /^user@/i,
+                /^admin@/i,
+                /@example\./i,
+                /@test\./i,
+                /@fake\./i,
+                /@localhost/i,
+                /\.local$/i,
+                /@domain\.com$/i,
+                /@email\.com$/i,
+                /@mail\.com$/i
+            ];
+
+            // Check if email matches any fake patterns
+            for (const pattern of fakeEmailPatterns) {
+                if (pattern.test(email)) {
+                    return false;
+                }
+            }
+
+            // Check for valid TLDs (top-level domains)
+            const validTLDs = [
+                'com', 'org', 'net', 'edu', 'gov', 'mil', 'io', 'co', 'info', 'biz',
+                'me', 'us', 'uk', 'ca', 'au', 'de', 'fr', 'it', 'es', 'nl', 'se', 'no',
+                'dk', 'fi', 'be', 'ch', 'at', 'pt', 'ie', 'gr', 'pl', 'cz', 'hu', 'ro',
+                'bg', 'hr', 'si', 'sk', 'lt', 'lv', 'ee', 'mt', 'cy', 'lu', 'is', 'li',
+                'jp', 'cn', 'in', 'br', 'ru', 'kr', 'sg', 'hk', 'tw', 'my', 'th', 'vn',
+                'id', 'ph', 'mx', 'ar', 'cl', 'pe', 'co', 've', 'za', 'eg', 'ng', 'ke',
+                'et', 'gh', 'tz', 'ug', 'zm', 'zw', 'ma', 'tn', 'dz', 'ly'
+            ];
+
+            const domainParts = email.split('@')[1]?.split('.');
+            const tld = domainParts?.[domainParts.length - 1]?.toLowerCase();
+
+            if (!tld || !validTLDs.includes(tld)) {
+                return false;
+            }
+
+            return true;
+        }
+
+        // Real-time email validation
+        document.getElementById('from_email').addEventListener('blur', function () {
+            const email = this.value.trim();
+            if (email && !isValidEmail(email)) {
+                this.style.borderColor = 'var(--error)';
+                this.style.boxShadow = '0 0 0 3px rgba(239, 68, 68, 0.2)';
+            } else {
+                this.style.borderColor = '';
+                this.style.boxShadow = '';
+            }
+        });
 
         function showToast(message, type = "info") {
             // Remove existing toasts
@@ -851,16 +920,56 @@
 
         form.addEventListener('submit', function (event) {
             event.preventDefault();
+
+            // Get form values
+            const userName = document.getElementById('from_name').value.trim();
+            const userEmail = document.getElementById('from_email').value.trim();
+            const userMessage = document.getElementById('message').value.trim();
+
+            // Validation checks
+            if (!userName) {
+                showToast("Please enter your name.", "error");
+                document.getElementById('from_name').focus();
+                return;
+            }
+
+            if (!userEmail) {
+                showToast("Please enter your email address.", "error");
+                document.getElementById('from_email').focus();
+                return;
+            }
+
+            if (!isValidEmail(userEmail)) {
+                showToast("Please enter a valid email address.", "error");
+                document.getElementById('from_email').focus();
+                document.getElementById('from_email').style.borderColor = 'var(--error)';
+                document.getElementById('from_email').style.boxShadow = '0 0 0 3px rgba(239, 68, 68, 0.2)';
+                return;
+            }
+
+            if (!userMessage) {
+                showToast("Please enter your message.", "error");
+                document.getElementById('message').focus();
+                return;
+            }
+
+            if (userMessage.length < 10) {
+                showToast("Please enter a more detailed message (at least 10 characters).", "error");
+                document.getElementById('message').focus();
+                return;
+            }
+
+            // Show sending message
             showToast("Sending your message...", "info");
 
             // Prepare the template parameters
             const templateParams = {
-                from_name: document.getElementById('from_name').value,
-                from_email: document.getElementById('from_email').value,
-                user_name: document.getElementById('from_name').value, // Duplicate for template consistency
-                user_email: document.getElementById('from_email').value, // Duplicate for template consistency
-                message: document.getElementById('message').value,
-                reply_to: document.getElementById('from_email').value // For reply-to functionality
+                from_name: userName,
+                from_email: userEmail,
+                user_name: userName,
+                user_email: userEmail,
+                message: userMessage,
+                reply_to: userEmail
             };
 
             // Send email using EmailJS
@@ -869,12 +978,21 @@
                     console.log('SUCCESS!', response.status, response.text);
                     showToast("Message sent successfully! I'll get back to you soon.", "success");
                     form.reset();
+
+                    // Reset any error styling
+                    document.getElementById('from_email').style.borderColor = '';
+                    document.getElementById('from_email').style.boxShadow = '';
                 }, function (error) {
                     console.error('FAILED...', error);
                     showToast("Failed to send message. Please try again or contact me directly.", "error");
                 });
         });
 
+        // Reset error styling when user starts typing
+        document.getElementById('from_email').addEventListener('input', function () {
+            this.style.borderColor = '';
+            this.style.boxShadow = '';
+        });
         // Add animation on scroll
         document.addEventListener('DOMContentLoaded', function () {
             const sections = document.querySelectorAll('.animate-section');
